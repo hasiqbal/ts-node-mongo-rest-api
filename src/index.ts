@@ -1,33 +1,26 @@
-import express from 'express';
-import http from 'http';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
-import compression from 'compression';
-import cors from 'cors';
+import http from "http";
+import { listenPort } from "../Interface";
+import { getTasks, addTask, updateTask, deleteTask } from "../controller";
 
-import router from './router';
-import mongoose from 'mongoose';
-
-const app = express();
-
-app.use(cors({
-  credentials: true,
-}));
-
-app.use(compression());
-app.use(cookieParser());
-app.use(bodyParser.json());
-
-const server = http.createServer(app);
-
-server.listen(8080, () => {
-  console.log('Server running on http://localhost:8080/');
+const server = http.createServer((req, res) =>{
+    if (req.method == "GET" && req.url == "/api/tasks") {
+        return getTasks(req,res);
+    }
+   if (req.method == "POST" && req.url == "/api/tasks") {
+    return addTask(req, res);
+  }
+  if (req.method == "PUT" && req.url == "/api/tasks") {
+    return updateTask(req, res);
+  }
+  if (req.method == "DELETE" && req.url == "/api/tasks") {
+    return deleteTask(req, res);
+  }
 });
 
-const MONGO_URL = ''; // DB URI
+ const localHostPort:listenPort = { PORT: 3000};
+ 
 
-mongoose.Promise = Promise;
-mongoose.connect(MONGO_URL);
-mongoose.connection.on('error', (error: Error) => console.log(error));
+server.listen(localHostPort.PORT, () => {
+    console.log(`server running on ${localHostPort.PORT}`)
+});
 
-app.use('/', router());

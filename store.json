@@ -1,0 +1,22 @@
+[
+    {
+      "id": 1,
+      "title": "Book tickets",
+      "completed": false
+    },
+    {
+      "id": 2,
+      "title": "Book 5 star hotel",
+      "completed": false
+    },
+    {
+      "id": 3,
+      "title": "Book transport to the airport",
+      "completed": false
+    },
+    {
+      "id": 4,
+      "title": "Book transport to the hotel",
+      "completed": true
+    }
+ ]
